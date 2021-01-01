@@ -1,0 +1,2015 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Django Documentation</title>
+    <style>
+        .container{
+            border: 1px solid lightgray;
+        }
+        .cent{
+            text-align: center;
+            padding: 10px;
+            background-color: #C9F0DD;
+            border-radius: 7px;
+        }
+        .txt{
+            border: 1px solid lightgray;
+            background-color: #F1F1F1;
+            padding: 10px;
+            border-radius: 7px;
+        }
+        .bordr{
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+  
+<div class="container pt-3 shadow">
+    
+    <h1 class="cent" ><a href="https://docs.djangoproject.com/en/3.0/intro/tutorial01/" target="_blank" >Django 3.0 Documentation</a></h1>
+    
+<pre><!-- Start of main <pre>1 -->
+<h3 class="cent"><a href="https://www.codewithharry.com/videos/python-django-tutorials-hindi-71" target="_blank">Reference</a></h3>
+In this Project <a href="https://code.visualstudio.com/">Visual Studio</a> is used for Coading 
+<!-- Type the below Command in the Terminal Box 1 -->
+Create a Folder & open in the Visual Studio Code
+  (mysite is name of the project, you can add your prefered name)
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>pip install django
+django-admin startproject mysite
+cd mysite
+python manage.py runserver
+</pre> Click <a href="http://127.0.0.1:8000/" target="_blank">127.0.0.1:8000</a>
+
+
+<!-- Type the below Command in the Terminal Box 2 -->
+To create your app, make sure you’re in the same directory as manage.py and type the command:
+  (blog is name of the app, you can add your prefered name)
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py startapp blog
+</pre>
+</pre><!-- End of main </pre>1 -->
+
+
+
+<br><!-- Creating Virtual Environment Starts Here -->
+<div class="accordion bordr" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <h4  class="cent">Creating a Virtual Environment</h4>
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+<!-- Type the below Command in the Terminal Box 3 -->
+(Virtual Environment is Created to Store all Packages ) <br>
+(myprojectenv is name of the Project, you can add your prefered name)
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>pip install virtualenv
+virtualenv myprojectenv
+myprojectenv\Scripts\activate
+pip install django
+pip freeze > requirements.txt
+</pre>
+(you can Download all needed files in any Computer by typing (pip install -r requirements.txt) in the Terminal) <br>
+deactivate(to exit from Virtual Environment) <br>
+del ProjectName(To delete Virtual Environment) <br>
+pip list(Displays all packages installed in virtual environment) <br>
+pip freeze(Displays packages installed in virtual environment)
+        </div>
+      </div>
+    </div>
+</div><!-- Creating Virtual Environment Ends Here -->
+<br><br>
+
+
+
+<pre><!-- Start of main </pre>2 -->
+Create a file called urls.py in the blog directory
+<pre class="txt"><!-- Code Box 2 --><h5 class="cent">Code</h5><h5 class="cent">mysite/urls.py</h5>
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('blog.urls'))
+]
+<hr><h5 class="cent" >blog/urls.py</h5>
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('blog', views.blog, name='blog'),
+]
+<hr><h5 class="cent" >blog/views.py</h5>
+from django.shortcuts import render
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def home(request):
+    return HttpResponse("Hello, world. You're at the home.")
+
+
+def blog(request):
+    return HttpResponse("Hello, world. You're at the blog.")
+</pre>Click <a href="http://127.0.0.1:8000/" target="_blank">127.0.0.1:8000</a>
+Click <a href="http://127.0.0.1:8000/blog" target="_blank">127.0.0.1:8000/blog</a>
+</pre><!-- End of main </pre>2 -->
+
+
+
+<pre><!-- Start of main </pre>3 -->
+<!-- Type the below Command in the Terminal Box 1 -->
+To create your app, make sure you’re in the same directory as manage.py and type the command:
+  (home is name of the app, you can add your prefered name)
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py startapp home
+</pre>
+</pre><!-- End of main </pre>3 -->
+
+
+
+<pre><!-- Start of main </pre>4 -->
+Create a file called urls.py in the home directory
+<pre class="txt"><!-- Code Box 2 --><h5 class="cent">Code</h5><h5 class="cent">mysite/urls.py</h5>
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('home.urls')),
+    path('blog/', include('blog.urls')),
+]
+<hr><h5 class="cent" >home/urls.py</h5>
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('about', views.about, name='about'),
+    path('contact', views.contact, name='contact'),
+]
+<hr><h5 class="cent" >home/views.py</h5>
+from django.shortcuts import render
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def home(request):
+    return HttpResponse("Hello, world. You're at the home.")
+
+
+def about(request):
+    return HttpResponse("Hello, world. You're at the about.")
+
+
+def contact(request):
+    return HttpResponse("Hello, world. You're at the contact.")
+<hr><h5 class="cent" >blog/urls.py</h5>
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.blogHome, name='blogHome'),
+    path('< str:slug>', views.blogPost, name='blogPost'),
+]
+<hr><h5 class="cent" >blog/views.py</h5>
+from django.shortcuts import render
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def blogHome(request):
+    return HttpResponse("Hello, world. You're at the blogHome.")
+
+
+def blogPost(request, slug):
+    return HttpResponse(f'Hello, world. You are at the blogPost: {slug}')
+</pre>Click <a href="http://127.0.0.1:8000/" target="_blank">127.0.0.1:8000</a>
+Click <a href="http://127.0.0.1:8000/about" target="_blank">127.0.0.1:8000/about</a>
+Click <a href="http://127.0.0.1:8000/contact" target="_blank">127.0.0.1:8000/contact</a>
+Click <a href="http://127.0.0.1:8000/blog" target="_blank">127.0.0.1:8000/blog</a>
+Click <a href="http://127.0.0.1:8000/blog/TypeBlogPostName" target="_blank">127.0.0.1:8000/blog/TypeBlogPostName</a>
+</pre><!-- End of main </pre>4 -->
+
+
+
+<pre><!-- Start of main </pre>5 --><br><br>
+Create a Folder called templates, make sure you’re in the same directory as manage.py
+Create a Folder called static, make sure you’re in the same directory as manage.py
+  (In mysite/settings.py, add templates in DIRS as 'DIRS': ['templates'], )
+Create folders called home & blog in the templates directory
+Create a file called base.html in the templates directory
+In templates/home create files called home.html, about.html & contact.html
+In templates/blog create files called blogHome.html & blogPost.html
+<pre class="txt"><!-- Code Box 2 --><h5 class="cent">Code</h5><h5 class="cent">mysite/settings.py</h5>
+TEMPLATES = [
+  {
+      'BACKEND': 'django.template.backends.django.DjangoTemplates',
+      'DIRS': ['templates'],
+      'APP_DIRS': True,
+      'OPTIONS': {
+          'context_processors': [
+              'django.template.context_processors.debug',
+              'django.template.context_processors.request',
+              'django.contrib.auth.context_processors.auth',
+              'django.contrib.messages.context_processors.messages',
+          ],
+      },
+  },
+]
+<hr><h5 class="cent" >home/views.py</h5>
+from django.shortcuts import render
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def home(request):
+    return render(request, 'home/home.html')
+    # return HttpResponse("Hello, world. You're at the home.")
+
+
+def about(request):
+    return render(request, 'home/about.html')
+    # return HttpResponse("Hello, world. You're at the about.")
+
+
+def contact(request):
+    return render(request, 'home/contact.html')
+    # return HttpResponse("Hello, world. You're at the contact.")
+<hr><h5 class="cent" >blog/views.py</h5>
+from django.shortcuts import render
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def blogHome(request):
+    return render(request, 'blog/blogHome.html')
+    # return HttpResponse("Hello, world. You're at the blogHome.")
+
+
+def blogPost(request, slug):
+    return render(request, 'blog/blogPost.html')
+    # return HttpResponse(f'Hello, world. You are at the blogPost: {slug}')
+<hr><h5 class="cent" >templates/base.html</h5>
+<textarea cols="150" rows="10">
+<!doctype html>
+<html lang="en">
+  
+  <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  
+      <title>{% block title %} {% endblock title %}</title>
+  </head>
+  
+  <body>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="/">MySite</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+  
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/about">About</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/contact">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/blog">Blog</a>
+                  </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+          </div>
+      </nav>
+  
+  
+      {% block body %} {% endblock body %}
+  
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+          crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+          integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+          crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+          integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+          crossorigin="anonymous"></script>
+  </body>
+  
+</html>
+</textarea>
+<hr><h5 class="cent" >templates/home/home.html</h5>
+<pre>
+{% extends 'base.html' %}
+{% block title %} Home {% endblock title %}
+
+
+{% block body %}
+home
+{% endblock body %}
+</pre><hr><h5 class="cent" >templates/home/about.html</h5>
+<pre>
+{% extends 'base.html' %}
+{% block title %} About {% endblock title %}
+
+
+{% block body %}
+about
+{% endblock body %}
+</pre><hr><h5 class="cent" >templates/home/contact.html</h5>
+<pre>
+{% extends 'base.html' %}
+{% block title %} Contact {% endblock title %}
+
+
+{% block body %}
+contact
+{% endblock body %}
+</pre><hr><h5 class="cent" >templates/blog/blogHome.html</h5>
+<pre>
+{% extends 'base.html' %}
+{% block title %} Blog {% endblock title %}
+
+
+{% block body %}
+BlogHome
+{% endblock body %}
+</pre><hr><h5 class="cent" >templates/blog/blogPost.html</h5>
+<pre>
+{% extends 'base.html' %}
+{% block title %} BlogPost {% endblock title %}
+
+
+{% block body %}
+BlogPost
+{% endblock body %}
+</pre></pre>Click <a href="http://127.0.0.1:8000/" target="_blank">127.0.0.1:8000</a>
+Click <a href="http://127.0.0.1:8000/about" target="_blank">127.0.0.1:8000/about</a>
+Click <a href="http://127.0.0.1:8000/contact" target="_blank">127.0.0.1:8000/contact</a>
+Click <a href="http://127.0.0.1:8000/blog" target="_blank">127.0.0.1:8000/blog</a>
+Click <a href="http://127.0.0.1:8000/blog/TypeBlogPostName" target="_blank">127.0.0.1:8000/blog/TypeBlogPostName</a>
+</pre><!-- End of main </pre>5 -->
+
+
+
+<pre><!-- Start of main </pre>6 --><br>
+<!-- Type the below Command in the Terminal Box -->
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py makemigrations
+python manage.py migrate
+</pre>
+</pre><!-- End of main </pre>6 -->
+
+
+
+<pre><!-- Start of main </pre>7 --><!-- Type the below Command in the Terminal Box -->
+Creating an admin user
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py createsuperuser
+</pre>Enter Username:narender
+Email address:
+Password:narender
+Password(again):narender
+Click <a href="http://127.0.0.1:8000/admin" target="_blank">127.0.0.1:8000/admin</a>
+</pre><!-- End of main </pre>7 -->
+
+
+
+<br><br><br><!-- Creating Contact Us Starts Here -->
+<div class="accordion bordr" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="true" aria-controls="collapseOne">
+            <h3 class="cent">Creating Contact Us</h3>
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseOne1" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+<pre><!-- Start of main </pre>8 -->
+<pre class="txt"><!-- Code Box 2 --><h5 class="cent">Code</h5><h5 class="cent" >templates/home/contact.html</h5>
+<iframe src="Assets\Contact.txt" frameborder="0" width="100%" height="500px"></iframe>
+<hr><h5 class="cent">home/models.py</h5>
+from django.db import models
+# Create your models here.
+class Contact(models.Model):
+    sno = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=13)
+    email = models.CharField(max_length=100)
+    content = models.TextField()
+<hr><h5 class="cent" >mysite/settings.py</h5>
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'home.apps.HomeConfig',
+    'blog.apps.BlogConfig',
+]
+</pre>
+</pre><!-- End of main </pre>8 -->
+
+
+
+<pre><!-- Start of main </pre>9 -->
+<!-- Type the below Command in the Terminal Box -->
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py makemigrations
+python manage.py migrate
+</pre>
+</pre><!-- Start of main </pre>9 -->
+
+
+
+<pre><!-- Start of main </pre>10 --><br>
+<pre class="txt"><!-- Code Box 2 --><h5 class="cent">Code</h5><h5 class="cent" >home/admin.py</h5>
+from django.contrib import admin
+from . models import Contact
+
+# Register your models here.
+admin.site.register(Contact)
+<hr><h5 class="cent">home/models.py</h5>
+from django.db import models
+
+# Create your models here.
+class Contact(models.Model):
+    sno = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=13)
+    email = models.CharField(max_length=100)
+    content = models.TextField()
+    timeStamp = models.DateTimeField(auto_now_add=True, blank=True)
+</pre>
+</pre><!-- End of main </pre>10 -->
+
+
+
+<pre><!-- Start of main </pre>11 -->
+<!-- Type the below Command in the Terminal Box -->
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py makemigrations
+</pre>Select an option: 1
+Press Enter
+</pre><!-- End of main </pre>11 -->
+
+
+
+<pre><!-- Start of main </pre>12 --><br>
+<!-- Type the below Command in the Terminal Box -->
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py migrate
+</pre>
+</pre><!-- End of main </pre>12 -->
+
+
+
+<pre><!-- Start of main </pre>13 --><br>
+<pre class="txt"><!-- Code Box 2 --><h5 class="cent">Code</h5><h5 class="cent" >templates/home/contact.html</h5>
+<iframe src="Assets\Contact1.txt" frameborder="0" width="100%" height="500px"></iframe>
+<hr><h5 class="cent">home/views.py</h5>
+from django.shortcuts import render
+from . models import Contact
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def home(request):
+    return render(request, 'home/home.html')
+
+
+def about(request):
+    return render(request, 'home/about.html')
+
+
+def contact(request):
+    if request.method=='POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        content = request.POST['content']
+        print(name, email, phone, content)
+        contact = Contact(name=name, email=email, phone=phone, content=content)
+        contact.save()
+    return render(request, 'home/contact.html')
+<hr><h5 class="cent">home/models.py</h5>
+from django.db import models
+
+# Create your models here.
+class Contact(models.Model):
+    sno = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=13)
+    email = models.CharField(max_length=100)
+    content = models.TextField()
+    timeStamp = models.DateTimeField(auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return 'Message from ' + self.name + ' - ' + self.email
+</pre>Enter Details Here <a href="http://127.0.0.1:8000/contact" target="_blank">127.0.0.1:8000/contact</a>
+Click <a href="http://127.0.0.1:8000/admin/home/contact/" target="_blank">127.0.0.1:8000/admin/home/contact</a>
+</pre><!-- End of main </pre>13 -->
+        </div>
+      </div>
+    </div>
+</div><!-- Creating Contact Us Ends Here -->
+<br>
+
+
+<br><br><br><!-- Creating Alert in Contact Us Page Here -->
+<div class="accordion bordr" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne">
+            <h4 class="cent">Creating Alert(Message send Successfully/Please fill the form correctly) in Contact Us Page</h4>
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseOne2" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+<pre><!-- Start of main </pre>14 -->
+<pre class="txt"><!-- Code Box 2 --><h5 class="cent">Code</h5><h5 class="cent" >templates/base.html</h5>
+<textarea cols="145" rows="10">
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+        <title>{% block title %} {% endblock title %}</title>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">MySite</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show" role="alert">
+            <strong>Message: </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    
+        {% block body %} {% endblock body %}
+    
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    </body>
+    
+</html>
+</textarea>
+<hr><h5 class="cent">home/views.py</h5>
+from django.shortcuts import render
+from . models import Contact
+from django.contrib import messages
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def home(request):
+    return render(request, 'home/home.html')
+
+
+def about(request):
+    return render(request, 'home/about.html')
+
+
+def contact(request):
+    if request.method=='POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        content = request.POST['content']
+        print(name, email, phone, content)
+
+        if len(name)<2 or len(email)<3 or len(phone)<10 or len(content)<4:
+            messages.error(request, "Please fill the form correctly")
+        else:
+            contact = Contact(name=name, email=email, phone=phone, content=content)
+            contact.save()
+            messages.success(request, "Your message has Successfully sent")
+    return render(request, 'home/contact.html')
+<hr><h5 class="cent">mysite/settings.py</h5>
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
+</pre>Enter Details Here <a href="http://127.0.0.1:8000/contact" target="_blank">127.0.0.1:8000/contact</a>
+Click <a href="http://127.0.0.1:8000/admin/home/contact/" target="_blank">127.0.0.1:8000/admin/home/contact</a>
+</pre><!-- End of main </pre>14 -->
+        </div>
+      </div>
+    </div>
+</div><!-- Creating Alert in Contact Us Page Here -->
+<br>
+
+
+
+<br><br><br><!-- Creating active when clicked on Pages -->
+<div class="accordion bordr" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne3" aria-expanded="true" aria-controls="collapseOne">
+            <h4 class="cent">Creating active when clicked on pages(Like Home, About, Contact, Blog)</h4>
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseOne3" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+<pre><!-- Start of main </pre>15 -->
+<pre class="txt"><!-- Code Box 2 --><h5 class="cent">Code</h5><h5 class="cent" >templates/base.html</h5>
+<textarea cols="145" rows="10">
+<!doctype html>
+<html lang="en">
+    
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+        <title>{% block title %} {% endblock title %}</title>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">MySite</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item {% block homeactive %} {% endblock homeactive %}">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item {% block aboutactive %} {% endblock aboutactive %}">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item {% block contactactive %} {% endblock contactactive %}">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item {% block blogactive %} {% endblock blogactive %}">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show" role="alert">
+            <strong>Message: </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    
+        {% block body %} {% endblock body %}
+    
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    </body>
+    
+</html>
+</textarea>
+<hr><h5 class="cent" >templates/home/home.html</h5>
+<pre>
+{% extends 'base.html' %}
+{% block title %} Home {% endblock title %}
+
+{% block homeactive %} active {% endblock homeactive %}
+
+{% block body %}
+home
+{% endblock body %}
+</pre><hr><h5 class="cent" >templates/home/about.html</h5>
+<pre>
+{% extends 'base.html' %}
+{% block title %} About {% endblock title %}
+
+{% block aboutactive %} active {% endblock aboutactive %}
+
+{% block body %}
+about
+{% endblock body %}
+</pre><hr><h5 class="cent" >templates/home/contact.html</h5>
+<iframe src="Assets\Contact2.txt" frameborder="0" width="100%" height="530px"></iframe>
+<hr><h5 class="cent" >templates/blog/blogHome.html</h5>
+<pre>
+{% extends 'base.html' %}
+{% block title %} Blog {% endblock title %}
+
+{% block blogactive %} active {% endblock blogactive %}
+
+{% block body %}
+Bloghome
+{% endblock body %}
+</pre><hr><h5 class="cent" >templates/blog/blogPost.html</h5>
+<pre>
+{% extends 'base.html' %}
+{% block title %} Blog {% endblock title %}
+
+{% block blogactive %} active {% endblock blogactive %}
+
+{% block body %}
+Bloghome
+{% endblock body %}
+</pre></pre>Click <a href="http://127.0.0.1:8000" target="_blank">127.0.0.1:8000</a>
+</pre><!-- End of main </pre>15 -->
+        </div>
+      </div>
+    </div>
+</div><!-- Creating active when clicked on Pages -->
+<br>
+
+
+
+<br><br><br><!-- Creating BlogHome & BlogPosts -->
+<div class="accordion bordr" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="true" aria-controls="collapseOne">
+            <h4 class="cent">Creating BlogHome & BlogPosts</h4>
+          </button>
+        </h2>
+      </div>
+
+      <div id="collapseOne4" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+<pre><!-- Start of main </pre>16 -->
+<pre class="txt"><h5 class="cent">Code</h5><h5 class="cent" >templates/home/home.html</h5>
+<iframe src="Assets\Home.txt" frameborder="0" width="100%" height="300px"></iframe>
+<hr><h5 class="cent">templates/blog/blogHome.html</h5>
+<iframe src="Assets\BlogHome.txt" frameborder="0" width="100%" height="420px"></iframe>
+<hr><h5 class="cent">blog/models.py</h5>
+from django.db import models
+
+# Create your models here.
+class Post(models.Model):
+    sno = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    author = models.CharField(max_length=13)
+    timeStamp = models.DateTimeField(blank=True)
+
+    def __str__(self):
+        return 'Message from ' + self.title + ' by ' + self.author
+</pre>
+</pre><!-- End of main </pre>16 -->
+
+
+
+<pre><!-- Start of main </pre>17 -->
+<!-- Type the below Command in the Terminal Box -->
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py makemigrations
+python manage.py migrate
+</pre>
+</pre><!-- Start of main </pre>17 -->
+
+
+
+<pre><!-- Start of main </pre>18 -->
+<pre class="txt"><h5 class="cent">Code</h5><h5 class="cent" >blog/admin.py</h5>
+from django.contrib import admin
+from . models import Post
+
+# Register your models here.
+admin.site.register(Post)
+<hr><h5 class="cent">blog/views.py</h5>
+from django.shortcuts import render
+
+# Create your views here.
+from django.http import HttpResponse
+from .models import Post
+
+
+def blogHome(request):
+    allPosts = Post.objects.all()
+    context = {'allPosts': allPosts}
+    return render(request, 'blog/blogHome.html', context)
+
+
+def blogPost(request, slug):
+    return render(request, 'blog/blogPost.html')
+<hr><h5 class="cent">templates/blog/blogHome.html</h5>
+<iframe src="Assets\BlogHome1.txt" frameborder="0" width="100%" height="430px"></iframe>
+<hr><h5 class="cent">blog/models.py</h5>
+from django.db import models
+
+# Create your models here.
+class Post(models.Model):
+    sno = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    author = models.CharField(max_length=13)
+    slug = models.CharField(max_length=130)
+    timeStamp = models.DateTimeField(blank=True)
+
+    def __str__(self):
+        return 'Message from ' + self.title + ' by ' + self.author
+</pre>
+</pre><!-- End of main </pre>18 -->
+
+
+
+<pre><!-- Start of main </pre>19 -->
+<!-- Type the below Command in the Terminal Box -->
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py makemigrations
+</pre>Select an option: 1
+Enter ''
+</pre><!-- End of main </pre>19 -->
+
+
+
+<pre><!-- Start of main </pre>20 --><br>
+<!-- Type the below Command in the Terminal Box -->
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py migrate
+</pre>Create Posts <a href="http://127.0.0.1:8000/admin/blog/post/" target="_blank">127.0.0.1:8000/admin/blog/post/</a>
+</pre><!-- End of main </pre>20 -->
+
+
+
+<pre><!-- Start of main </pre>21 -->
+<pre class="txt"><h5 class="cent">Code</h5><h5 class="cent">blog/views.py</h5>
+from django.shortcuts import render
+# Create your views here.
+from django.http import HttpResponse
+from .models import Post
+
+
+def blogHome(request):
+    allPosts = Post.objects.all()
+    context = {'allPosts': allPosts}
+    return render(request, 'blog/blogHome.html', context)
+
+
+def blogPost(request, slug):
+    post = Post.objects.filter(slug=slug).first()
+    context = {'post': post}
+    return render(request, 'blog/blogPost.html', context)
+<hr><h5 class="cent">templates/blog/blogPost.html</h5>
+<textarea cols="145" rows="10">
+{% extends 'base.html' %}
+{% block title %} BlogPost {% endblock title %}
+
+{% block blogactive %} active {% endblock blogactive %}
+
+{% block body %}
+<div class="container my-3">
+    <h2 class="blog-post-title">{{ post.title }}</h2>
+    <p class="blog-post-meta">{{ post.timeStamp }} by <a href="/about">{{ post.author }}</a></p>
+
+    <p>{{ post.content }}</p>
+
+</div>
+{% endblock body %}
+</textarea>
+</pre> Click <a href="http://127.0.0.1:8000/blog/" target="_blank">127.0.0.1:8000/blog</a>
+</pre><!-- End of main </pre>21 -->
+        </div>
+      </div>
+    </div>
+</div><!-- Creating BlogHome & BlogPosts -->
+<br>
+
+
+
+<br><br><br><!-- Creating Search Functionality -->
+<div class="accordion bordr" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne5" aria-expanded="true" aria-controls="collapseOne">
+            <h4 class="cent">Creating Search Functionality</h4>
+          </button>
+        </h2>
+      </div>
+
+      <div id="collapseOne5" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+<pre><!-- Start of main </pre>22 -->
+In templates/home create file called search.html
+<pre class="txt"><h5 class="cent">Code</h5><h5 class="cent">home/urls.py</h5>
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('about', views.about, name='about'),
+    path('contact', views.contact, name='contact'),
+    path('search', views.search, name='search'),
+]
+<hr><h5 class="cent">home/views.py</h5>
+from django.shortcuts import render
+from .models import Contact
+from django.contrib import messages
+from blog.models import Post
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def home(request):
+    return render(request, 'home/home.html')
+
+
+def about(request):
+    return render(request, 'home/about.html')
+
+
+def contact(request):
+    if request.method=='POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        content = request.POST['content']
+        print(name, email, phone, content)
+
+        if len(name)<2 or len(email)<3 or len(phone)<10 or len(content)<4:
+            messages.error(request, "Please fill the form correctly")
+        else:
+            contact = Contact(name=name, email=email, phone=phone, content=content)
+            contact.save()
+            messages.success(request, "Your message has Successfully sent")
+    return render(request, 'home/contact.html')
+
+
+def search(request):
+    query = request.GET['query']
+    if len(query) > 78 or len(query) == 0:
+        allPosts = Post.objects.none()
+    else:
+        allPosts = Post.objects.filter(title__icontains=query)
+    if allPosts.count() == 0:
+        messages.error(request, "No search results found")
+    params = {'allPosts': allPosts, 'query': query}
+    return render(request, 'home/search.html', params)
+    # return HttpResponse('This is Search')
+
+
+#Try Below Code To Enable Search Functionality By Title & Post Keywords
+# def search(request):
+#     query = request.GET['query']
+#     if len(query) > 78 or len(query) == 0:
+#         allPosts = Post.objects.none()
+#     else:
+#         allPostsTitle = Post.objects.filter(title__icontains=query)
+#         allPostsContent = Post.objects.filter(content__icontains=query)
+#         allPosts = allPostsTitle.union(allPostsContent)
+#     if allPosts.count() == 0:
+#         messages.error(request, "No search results found")
+#     params = {'allPosts': allPosts, 'query': query}
+#     return render(request, 'home/search.html', params)
+<hr><h5 class="cent">templates/base.html</h5>
+<textarea cols="145" rows="10">
+<!doctype html>
+<html lang="en">
+    
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+        <title>{% block title %} {% endblock title %}</title>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">MySite</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item {% block homeactive %} {% endblock homeactive %}">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item {% block aboutactive %} {% endblock aboutactive %}">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item {% block contactactive %} {% endblock contactactive %}">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item {% block blogactive %} {% endblock blogactive %}">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                </ul>
+                <form method="get" action="/search" class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show" role="alert">
+            <strong>Message: </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    
+        {% block body %} {% endblock body %}
+    
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    </body>
+    
+</html>
+</textarea>
+<hr><h5 class="cent">templates/home/search.html</h5>
+<textarea cols="145" rows="10">
+{% extends 'base.html' %}
+{% block title %} Search Results {% endblock title %}
+
+{% block blogactive %} active {% endblock blogactive %}
+
+{% block body %}
+<div class="container my-3">
+    <h2>Search Results:</h2>
+    {% if allPosts|length < 1 %}
+    <p>No Results Found</p>
+    
+    <b>Your search</b> - {{ query }} - <b>did not match any results.</b>
+    <br><br>
+    <b>Suggestions:</b>
+    <ul>
+    <li>Make sure that all words are spelled correctly.</li>
+    <li>Try different Keywords.</li>
+    <li>Try more general Keywords.</li>
+    <li>Try fewer keywords.</li>
+    </ul>
+    {% endif %}
+    {% for post in allPosts %}
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary">Article by {{ post.author }}</strong>
+            <h3 class="mb-0">{{ post.title }}</h3>
+            <div class="mb-1 text-muted">{{ post.datetime }}</div>
+            <p class="card-text mb-auto">{{ post.content | truncatechars:500 }}</p>
+            <div class="my-2">
+                <a href="/blog/{{ post.slug }}" role="button" class="btn btn-primary">Continue reading</a>
+            </div>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock body %}
+</textarea>
+</pre> Try Search <a href="http://127.0.0.1:8000" target="_blank">127.0.0.1:8000</a>
+</pre><!-- End of main </pre>22 -->
+        </div>
+      </div>
+    </div>
+</div><!-- Creating Search Functionality -->
+<br>
+
+
+
+<br><br><br><!-- Creating SignUp & Login -->
+<div class="accordion bordr" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne6" aria-expanded="true" aria-controls="collapseOne">
+            <h4 class="cent">Creating SignUp & Login/Logout</h4>
+          </button>
+        </h2>
+      </div>
+
+      <div id="collapseOne6" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+<pre><!-- Start of main </pre>23 -->
+<pre class="txt"><h5 class="cent">Code</h5><h5 class="cent">Creating SignUp</h5><h5 class="cent">home/urls.py</h5>
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('about', views.about, name='about'),
+    path('contact', views.contact, name='contact'),
+    path('search', views.search, name='search'),
+    path('signup', views.handleSignup, name='handleSignup'),
+]
+<hr><h5 class="cent">templates/home/base.html</h5>
+<textarea cols="145" rows="10">
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>{% block title %} {% endblock title %}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">MySite</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% block homeactive %} {% endblock homeactive %}">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item {% block aboutactive %} {% endblock aboutactive %}">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item {% block contactactive %} {% endblock contactactive %}">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+                <li class="nav-item {% block blogactive %} {% endblock blogactive %}">
+                    <a class="nav-link" href="/blog">Blog</a>
+                </li>
+            </ul>
+            <form method="get" action="/search" class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query"
+                    id="query">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <!-- Button to trigger Login modal -->
+            <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#loginmodal">
+                Login
+            </button>
+            <!-- Button to trigger SignUp modal -->
+            <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#signupmodal">
+                Sign Up
+            </button>
+        </div>
+    </nav>
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show" role="alert">
+        <strong>Message: </strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+
+
+    <!--SignUp Modal -->
+    <div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="signupmodalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupmodalLabel">Sign Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/signup" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">User Name</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="User Name must be lowercase and alphanumeric" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass1">Password</label>
+                            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Enter your Password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass2">Confirm Password</label>
+                            <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Enter your Password Again" required>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Login Modal -->
+    <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginmodalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginmodalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="username">User Name</label>
+                            <input type="text" class="form-control" id="loginusername" name="username" placeholder="User Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass">Password</label>
+                            <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter your Password" required>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block body %} {% endblock body %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+</textarea>
+<hr><h5 class="cent">home/views.py</h5>
+from django.shortcuts import render, HttpResponse, redirect
+from .models import Contact
+from django.contrib import messages
+from blog.models import Post
+from django.contrib.auth.models import User
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def home(request):
+    return render(request, 'home/home.html')
+
+
+def about(request):
+    return render(request, 'home/about.html')
+
+
+def contact(request):
+    if request.method=='POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        content = request.POST['content']
+        print(name, email, phone, content)
+
+        if len(name)<2 or len(email)<3 or len(phone)<10 or len(content)<4:
+            messages.error(request, "Please fill the form correctly")
+        else:
+            contact = Contact(name=name, email=email, phone=phone, content=content)
+            contact.save()
+            messages.success(request, "Your message has Successfully sent")
+    return render(request, 'home/contact.html')
+
+
+
+def search(request):
+    query = request.GET['query']
+    if len(query) > 78 or len(query) == 0:
+        allPosts = Post.objects.none()
+    else:
+        allPostsTitle = Post.objects.filter(title__icontains=query)
+        allPostsContent = Post.objects.filter(content__icontains=query)
+        allPosts = allPostsTitle.union(allPostsContent)
+    if allPosts.count() == 0:
+        messages.error(request, "No search results found")
+    params = {'allPosts': allPosts, 'query': query}
+    return render(request, 'home/search.html', params)
+
+
+
+def handleSignup(request):
+    if request.method == 'POST':
+        # Get the Post Parameters
+        username = request.POST['username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
+
+        # Check for errorneous inputs
+        # Username must be under 10 characters
+        if len(username) > 10:
+            messages.error(request, "Username must be under 10 characters")
+            return redirect('home')
+
+        # Username must be Alphanumeric
+        if not username.isalnum():
+            messages.error(request, "Username should only contain letters and numbers")
+            return redirect('home')
+
+        # Passwords should match
+        if pass1 != pass2:
+            messages.error(request, "Password do not match")
+            return redirect('home')
+
+        # Creating user
+        myuser = User.objects.create_user(username, email, pass1)
+        myuser.first_name = fname
+        myuser.last_name = lname
+        myuser.save()
+        messages.success(request, "Your account has Successfully Created")
+        return redirect('home')
+
+    else:
+        return HttpResponse('404 - Not Found')
+<hr><h5 class="cent">Creating Login/Logout</h5><h5 class="cent">home/urls.py</h5>
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('about', views.about, name='about'),
+    path('contact', views.contact, name='contact'),
+    path('search', views.search, name='search'),
+    path('signup', views.handleSignup, name='handleSignup'),
+    path('login', views.handleLogin, name='handleSignupLogin'),
+    path('logout', views.handleLogout, name='handleSignupLogout'),
+]
+<hr><h5 class="cent">templates/home/base.html</h5>
+<textarea cols="145" rows="10">
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>{% block title %} {% endblock title %}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">MySite</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% block homeactive %} {% endblock homeactive %}">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item {% block aboutactive %} {% endblock aboutactive %}">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item {% block contactactive %} {% endblock contactactive %}">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+                <li class="nav-item {% block blogactive %} {% endblock blogactive %}">
+                    <a class="nav-link" href="/blog">Blog</a>
+                </li>
+            </ul>
+            <form method="get" action="/search" class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query"
+                    id="query">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Welcome {{request.user}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="/logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
+            <!-- You are Logged in as {{request.user}} -->
+            {% else %}
+            <!-- Button to trigger Login modal -->
+            <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#loginmodal">
+                Login
+            </button>
+            <!-- Button to trigger SignUp modal -->
+            <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#signupmodal">
+                Sign Up
+            </button>
+            {% endif %}
+        </div>
+    </nav>
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show" role="alert">
+        <strong>Message: </strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+
+
+    <!--SignUp Modal -->
+    <div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="signupmodalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupmodalLabel">Sign Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/signup" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">User Name</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="User Name must be lowercase and alphanumeric" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass1">Password</label>
+                            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Enter your Password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass2">Confirm Password</label>
+                            <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Enter your Password Again" required>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Login Modal -->
+    <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginmodalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginmodalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/login" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">User Name</label>
+                            <input type="text" class="form-control" id="loginusername" name="loginusername" placeholder="User Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass">Password</label>
+                            <input type="password" class="form-control" id="loginpass" name="loginpass" placeholder="Enter your Password" required>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block body %} {% endblock body %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+</textarea>
+<hr><h5 class="cent">home/views.py</h5>
+from django.shortcuts import render, HttpResponse, redirect
+from .models import Contact
+from django.contrib import messages
+from blog.models import Post
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+
+# Create your views here.
+from django.http import HttpResponse
+
+
+def home(request):
+    return render(request, 'home/home.html')
+
+
+def about(request):
+    return render(request, 'home/about.html')
+
+
+def contact(request):
+    if request.method=='POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        content = request.POST['content']
+        print(name, email, phone, content)
+
+        if len(name)<2 or len(email)<3 or len(phone)<10 or len(content)<4:
+            messages.error(request, "Please fill the form correctly")
+        else:
+            contact = Contact(name=name, email=email, phone=phone, content=content)
+            contact.save()
+            messages.success(request, "Your message has Successfully sent")
+    return render(request, 'home/contact.html')
+
+
+
+def search(request):
+    query = request.GET['query']
+    if len(query) > 78 or len(query) == 0:
+        allPosts = Post.objects.none()
+    else:
+        allPostsTitle = Post.objects.filter(title__icontains=query)
+        allPostsContent = Post.objects.filter(content__icontains=query)
+        allPosts = allPostsTitle.union(allPostsContent)
+    if allPosts.count() == 0:
+        messages.error(request, "No search results found")
+    params = {'allPosts': allPosts, 'query': query}
+    return render(request, 'home/search.html', params)
+
+
+
+def handleSignup(request):
+    if request.method == 'POST':
+        # Get the Post Parameters
+        username = request.POST['username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
+
+        # Check for errorneous inputs
+        # Username must be under 10 characters
+        if len(username) > 10:
+            messages.error(request, "Username must be under 10 characters")
+            return redirect('home')
+
+        # Username must be Alphanumeric
+        if not username.isalnum():
+            messages.error(request, "Username should only contain letters and numbers")
+            return redirect('home')
+
+        # Passwords should match
+        if pass1 != pass2:
+            messages.error(request, "Password do not match")
+            return redirect('home')
+
+        # Creating user
+        myuser = User.objects.create_user(username, email, pass1)
+        myuser.first_name = fname
+        myuser.last_name = lname
+        myuser.save()
+        messages.success(request, "Your account has Successfully Created")
+        return redirect('home')
+
+    else:
+        return HttpResponse('404 - Not Found')
+
+
+
+def handleLogin(request):
+    if request.method == 'POST':
+        # Get the Post Parameters
+        loginusername = request.POST['loginusername']
+        loginpass = request.POST['loginpass']
+        user = authenticate(username=loginusername, password=loginpass)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Successfully Logged In")
+            return redirect('home')
+        else:
+            messages.error(request, "Invalid Credentials, Please try again")
+            return redirect('home')
+
+    return HttpResponse('404 - Not Found')
+
+
+
+def handleLogout(request):
+    logout(request)
+    messages.success(request, "Successfully Logged Out")
+    return redirect('home')
+</pre>Try SignUp & Login/Logout <a href="http://127.0.0.1:8000" target="_blank">127.0.0.1:8000</a>
+</pre><!-- Start of main </pre>23 -->
+        </div>
+      </div>
+    </div>
+</div><!-- Creating SignUp & Login -->
+<br><br>
+
+
+
+<br>
+<pre><!-- Start of main </pre>24 --><!-- Type the below Command in the Terminal Box -->
+<pre class="txt">
+<h6 class="cent" >Code</h6><h6 class="cent" >mysite/urls.py</h6>from django.contrib import admin
+from django.contrib import admin
+from django.urls import include, path
+
+admin.site.site_header = "mysite"
+admin.site.site_title = "mysite"
+admin.site.index_title = "Welcome to mysite"
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('home.urls')),
+    path('blog/', include('blog.urls')),
+]
+</pre>Click <a href="http://127.0.0.1:8000/admin" target="_blank">127.0.0.1:8000/admin</a>
+</pre><!-- End of main </pre>24 -->
+
+
+
+<br><br><br><!-- Creating Comments/Replies to Comments -->
+<div class="accordion bordr" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne7" aria-expanded="true" aria-controls="collapseOne">
+            <h4  class="cent">Creating Comments/Replies to Comments</h4>
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseOne7" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+<pre><!-- Start of main </pre>25 -->
+<pre class="txt"><h5 class="cent">Code</h5><h5 class="cent">blog/models.py</h5>
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils.timezone import now
+
+# Create your models here.
+class Post(models.Model):
+    sno = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    author = models.CharField(max_length=13)
+    slug = models.CharField(max_length=130)
+    timeStamp = models.DateTimeField(blank=True)
+
+    def __str__(self):
+        return 'Message from ' + self.title + ' by ' + self.author
+
+
+class BlogComment(models.Model):
+    sno = models.AutoField(primary_key=True)
+    comment = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    timeStamp = models.DateTimeField(default=now)
+    
+    def __str__(self):
+        return self.comment[0:17] + "..." + " by " + self.user.username
+<hr><h5 class="cent">blog/admin.py</h5>
+from django.contrib import admin
+from . models import Post, BlogComment
+
+# Register your models here.
+admin.site.register((Post, BlogComment))
+</pre>
+<br><!-- Type the below Command in the Terminal Box -->
+<pre class="txt">
+<h6 class="cent" >Type the below Command in the Terminal</h6>python manage.py makemigrations
+python manage.py migrate
+</pre>Click <a href="http://127.0.0.1:8000/admin" target="_blank">127.0.0.1:8000/admin</a>
+<br><br>
+In static Folder, Create a Folder called img
+In img add user.png image
+In mysite/settings.py add below Command at the End
+<pre class="txt"><h5 class="cent">Code</h5><h5 class="cent">mysite/settings.py</h5>
+STATICFILES_DIRS = [
+os.path.join(BASE_DIR, 'static')
+]
+</pre>
+<br><br>
+<pre class="txt"><h5 class="cent">Code</h5><h5 class="cent">Creating Comments</h5><h5 class="cent">templates/blog/blogPost.html</h5>
+<iframe src="Assets\BlogPost.txt" frameborder="0" width="100%" height="730px"></iframe>
+<h5 class="cent">blog/urls.py</h5>
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    # API to post Comment
+    path('postComment', views.postComment, name='postComment'),
+    path('', views.blogHome, name='blogHome'),
+    path('< str:slug>', views.blogPost, name='blogPost'),
+]
+
+<h5 class="cent">blog/views.py</h5>
+from django.shortcuts import render, redirect
+
+# Create your views here.
+from django.http import HttpResponse
+from .models import Post, BlogComment
+from django.contrib import messages
+
+
+def blogHome(request):
+    allPosts = Post.objects.all()
+    context = {'allPosts': allPosts}
+    return render(request, 'blog/blogHome.html', context)
+
+
+def blogPost(request, slug):
+    post = Post.objects.filter(slug=slug).first()
+    comments = BlogComment.objects.filter(post=post)
+    context = {'post': post, 'comments': comments, 'user': request.user}
+    return render(request, 'blog/blogPost.html', context)
+    
+
+def postComment(request):
+    if request.method == 'POST':
+        comment = request.POST.get("comment")
+        user = request.user
+        postSno = request.POST.get("postSno")
+        post = Post.objects.get(sno=postSno)
+
+        comment = BlogComment(comment=comment, user=user, post=post)
+        comment.save()
+        messages.success(request, "Your Comment has been posted Successfully")
+    return redirect(f"/blog/{post.slug}")
+
+<h5 class="cent">mysite/settings.py</h5>
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'home.apps.HomeConfig',
+    'blog.apps.BlogConfig',
+    'django.contrib.humanize',
+]
+</pre>
+<br><br>
+(Creating Custom filters)
+In blog, Create a Folder called templatetags
+In blog/templatetags Create files called __init__.py & extras.py
+<pre class="txt"><h5 class="cent">Code</h5><h5 class="cent">Creating Replies to Comments</h5><h5 class="cent">blog/templatetags/extras.py</h5>
+from django import template
+register = template.Library()
+
+@register.filter(name='get_val')
+def get_val(dict, key):
+    return dict.get(key)
+
+<h5 class="cent">templates/blog/blogPost.html</h5>
+<iframe src="Assets\BlogPost1.txt" frameborder="0" width="100%" height="1410px"></iframe>
+<h5 class="cent">blog/views.py</h5>
+from django.shortcuts import render, redirect
+
+# Create your views here.
+from django.http import HttpResponse
+from .models import Post, BlogComment
+from django.contrib import messages
+from blog.templatetags import extras
+
+
+def blogHome(request):
+    allPosts = Post.objects.all()
+    context = {'allPosts': allPosts}
+    return render(request, 'blog/blogHome.html', context)
+
+
+def blogPost(request, slug):
+    post = Post.objects.filter(slug=slug).first()
+    comments = BlogComment.objects.filter(post=post, parent=None)
+    replies = BlogComment.objects.filter(post=post).exclude(parent=None)
+    replyDict = {}
+    for reply in replies:
+        if reply.parent.sno not in replyDict.keys():
+            replyDict[reply.parent.sno] = [reply]
+        else:
+            replyDict[reply.parent.sno].append(reply)
+    print(replyDict)
+    context = {'post': post, 'comments': comments, 'user': request.user, 'replyDict': replyDict}
+    return render(request, 'blog/blogPost.html', context)
+    
+
+def postComment(request):
+    if request.method == 'POST':
+        comment = request.POST.get("comment")
+        user = request.user
+        postSno = request.POST.get("postSno")
+        post = Post.objects.get(sno=postSno)
+        parentSno = request.POST.get("parentSno")
+        if parentSno == "":
+            comment = BlogComment(comment=comment, user=user, post=post)
+            comment.save()
+            messages.success(request, "Your Comment has been posted Successfully")
+        else:
+            parent = BlogComment.objects.get(sno=parentSno)
+            comment = BlogComment(comment=comment, user=user, post=post, parent=parent)
+            comment.save()
+            messages.success(request, "Your Reply has been posted Successfully")
+    return redirect(f"/blog/{post.slug}")
+
+</pre></pre><!-- Start of main </pre>25 -->
+        </div>
+      </div>
+    </div>
+</div><!-- Creating Comments/Replies to Comments -->
+<br><br>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

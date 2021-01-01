@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %} BlogPost {% endblock title %}
+
+{% block blogactive %} active {% endblock blogactive %}
+
+{% block body %}
+<!-- load humanize is used to show Time(Like 6 hours ago) --> 
+{% load humanize %}
+<!-- load extras is Created By Me --> 
+{% load extras %}
+<div class="container my-3">
+    <h2 class="blog-post-title">{{ post.title }}</h2>
+    <p class="blog-post-meta">{{ post.timeStamp }} by <a href="/about">{{ post.author }}</a></p>
+
+    <p>{{ post.content }}</p>
+
+</div>
+
+<div class="container">
+    <h2>Comments({{comments.count}})</h2>
+    <div class="my-2">
+        {% if user.is_authenticated %}
+        <form action="/blog/postComment" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="comment">Post Comment</label>
+                <input type="text" class="form-control" name="comment" placeholder="Enter Comment Here">
+            </div>
+            <input type="hidden" name="postSno" value="{{post.sno}}">
+            <input type="hidden" name="parentSno" value="">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        {% else %}
+        <p>Please Login to Post a Comment</p>
+        {% endif %}
+    </div>
+
+    {% for comment in comments %}
+    <div class="row my-3">
+        <div class="col-1">
+            <img class="rounded-circle w-100" src="/static/img/user.png" alt="user">
+        </div>
+        <div class="col-11">
+            <b>{{comment.user.username}}</b> {{comment.timeStamp | naturaltime}}
+            <div>{{comment.comment}}</div>
+
+            <div class="reply mx-0">
+                {% if user.is_authenticated %}
+                <button class="btn btn-sm btn-primary my-2" type="button" data-toggle="collapse" data-target="#reply{{comment.sno}}"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    Reply
+                </button>
+                <div class="collapse" id="reply{{comment.sno}}">
+                    <div class="mx-4">
+                        <form action="/blog/postComment" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" class="form-control mt-2" name="comment" placeholder="Enter Comment Here">
+                                <input type="hidden" name="parentSno" value="{{comment.sno}}">
+                            </div>
+                            <input type="hidden" name="postSno" value="{{post.sno}}">
+                            <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                <button class="btn btn-sm btn-primary my-2" type="button" data-toggle="collapse" data-target="#reply{{comment.sno}}"
+                    disabled aria-expanded="false" aria-controls="collapseExample">
+                    Login to Reply
+                </button>
+                {% endif %}
+
+                <div class="replies mx-4 my-2">
+                    {% for reply in replyDict|get_val:comment.sno %}
+                        <div class="row my-3">
+                            <div class="col-1">
+                                <img class="rounded-circle w-100" src="/static/img/user.png" alt="user">
+                            </div>
+                            <div class="col-11">
+                                <b>{{reply.user.username}}</b> {{reply.timeStamp | naturaltime}}
+                                <div>{{reply.comment}}</div>
+                            </div>
+                        </div> 
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock body %}
